@@ -1,0 +1,30 @@
+bibentry(
+  bibtype = "Article",
+  title = "Soil nematode community structure and composition along a pomegranate plantation chronosequence in the Loess Plateau",
+  author = c(
+    person("Yuxuan", "He"),
+    person("Jinglong", "He"),
+    person("Jinlei", "Feng"),
+    person("Xinlei", "Fu"),
+    person("Yingxin", "Jia"),
+    person("Yuan", "Miao"),
+    person("Miao", "Wang"),
+    person("Dong", "Wang")
+  ),
+  journal = "Applied Soil Ecology",
+  year = "2026",
+  volume = "219",
+  pages = "106820",
+  doi = "10.1016/j.apsoil.2026.106820"
+)
+
+bibentry(
+  bibtype = "Manual",
+  title = "Nematode: Ecological Indices Calculator for Nematode Communities",
+  author = c(
+    person("Yuxuan", "He"),
+    person("Dong", "Wang")
+  ),
+  year = "2026",
+  paste("R package version", meta$Version)
+)
