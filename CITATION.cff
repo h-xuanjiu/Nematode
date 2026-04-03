@@ -1,0 +1,255 @@
+# --------------------------------------------
+# CITATION file created with {cffr} R package
+# See also: https://docs.ropensci.org/cffr/
+# --------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "Nematode" in publications use:'
+type: software
+license: GPL-3.0-or-later
+title: 'Nematode: Ecological Indices Calculator for Nematode Communities'
+version: 0.2.2
+doi: 10.1016/j.apsoil.2026.106820
+identifiers:
+- type: doi
+  value: 10.32614/CRAN.package.Nematode
+abstract: Provides a computational toolkit for analyzing nematode communities in ecological
+  studies. Includes methods to quantify nematode-based ecological indicators such
+  as metabolic footprints, energy flow metrics, and community structure. These tools
+  support assessments of soil health, ecosystem functioning, and trophic interactions,
+  standardizing the use of nematodes as bioindicators.
+authors:
+- family-names: He
+  given-names: Yuxuan
+  email: heyuxuan0525@outlook.com
+  orcid: https://orcid.org/0009-0007-1149-5554
+preferred-citation:
+  type: article
+  title: Soil nematode community structure and composition along a pomegranate plantation
+    chronosequence in the Loess Plateau
+  authors:
+  - family-names: He
+    given-names: Yuxuan
+    email: heyuxuan0525@outlook.com
+    orcid: https://orcid.org/0009-0007-1149-5554
+  - family-names: He
+    given-names: Jinglong
+  - family-names: Feng
+    given-names: Jinlei
+  - family-names: Fu
+    given-names: Xinlei
+  - family-names: Jia
+    given-names: Yingxin
+  - family-names: Miao
+    given-names: Yuan
+  - family-names: Wang
+    given-names: Miao
+  - family-names: Wang
+    given-names: Dong
+  journal: Applied Soil Ecology
+  year: '2026'
+  volume: '219'
+  doi: 10.1016/j.apsoil.2026.106820
+  start: '106820'
+repository: https://CRAN.R-project.org/package=Nematode
+date-released: '2026-03-18'
+contact:
+- family-names: He
+  given-names: Yuxuan
+  email: heyuxuan0525@outlook.com
+  orcid: https://orcid.org/0009-0007-1149-5554
+references:
+- type: manual
+  title: 'Nematode: Ecological Indices Calculator for Nematode Communities'
+  authors:
+  - family-names: He
+    given-names: Yuxuan
+  - family-names: Wang
+    given-names: Dong
+  year: '2026'
+- type: software
+  title: 'R: A Language and Environment for Statistical Computing'
+  notes: Depends
+  url: https://www.R-project.org/
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2026'
+  version: '>= 3.5'
+- type: software
+  title: dplyr
+  abstract: 'dplyr: A Grammar of Data Manipulation'
+  notes: Imports
+  url: https://dplyr.tidyverse.org
+  repository: https://CRAN.R-project.org/package=dplyr
+  authors:
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@posit.co
+    orcid: https://orcid.org/0000-0003-4757-117X
+  - family-names: François
+    given-names: Romain
+    orcid: https://orcid.org/0000-0002-2444-4226
+  - family-names: Henry
+    given-names: Lionel
+  - family-names: Müller
+    given-names: Kirill
+    orcid: https://orcid.org/0000-0002-1416-3412
+  - family-names: Vaughan
+    given-names: Davis
+    email: davis@posit.co
+    orcid: https://orcid.org/0000-0003-4777-038X
+  year: '2026'
+  doi: 10.32614/CRAN.package.dplyr
+  version: '>= 1.1.4'
+- type: software
+  title: purrr
+  abstract: 'purrr: Functional Programming Tools'
+  notes: Imports
+  url: https://purrr.tidyverse.org/
+  repository: https://CRAN.R-project.org/package=purrr
+  authors:
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@posit.co
+    orcid: https://orcid.org/0000-0003-4757-117X
+  - family-names: Henry
+    given-names: Lionel
+    email: lionel@posit.co
+  year: '2026'
+  doi: 10.32614/CRAN.package.purrr
+  version: '>= 1.0.4'
+- type: software
+  title: stats
+  abstract: 'R: A Language and Environment for Statistical Computing'
+  notes: Imports
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2026'
+- type: software
+  title: stringdist
+  abstract: 'stringdist: Approximate String Matching, Fuzzy Text Search, and String
+    Distance Functions'
+  notes: Imports
+  url: https://github.com/markvanderloo/stringdist
+  repository: https://CRAN.R-project.org/package=stringdist
+  authors:
+  - family-names: Loo
+    given-names: Mark
+    name-particle: van der
+    email: mark.vanderloo@gmail.com
+    orcid: https://orcid.org/0000-0002-9807-4686
+  year: '2026'
+  doi: 10.32614/CRAN.package.stringdist
+  version: '>= 0.9.15'
+- type: software
+  title: utils
+  abstract: 'R: A Language and Environment for Statistical Computing'
+  notes: Imports
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2026'
+- type: software
+  title: vegan
+  abstract: 'vegan: Community Ecology Package'
+  notes: Imports
+  url: https://vegandevs.github.io/vegan/
+  repository: https://CRAN.R-project.org/package=vegan
+  authors:
+  - family-names: Oksanen
+    given-names: Jari
+    email: jhoksane@gmail.com
+  - family-names: Simpson
+    given-names: Gavin L.
+    email: ucfagls@gmail.com
+  - family-names: Blanchet
+    given-names: F. Guillaume
+  - family-names: Kindt
+    given-names: Roeland
+  - family-names: Legendre
+    given-names: Pierre
+  - family-names: Minchin
+    given-names: Peter R.
+  - family-names: O'Hara
+    given-names: R.B.
+  - family-names: Solymos
+    given-names: Peter
+  - family-names: Stevens
+    given-names: M. Henry H.
+  - family-names: Szoecs
+    given-names: Eduard
+  - family-names: Wagner
+    given-names: Helene
+  - family-names: Barbour
+    given-names: Matt
+  - family-names: Bedward
+    given-names: Michael
+  - family-names: Bolker
+    given-names: Ben
+  - family-names: Borcard
+    given-names: Daniel
+  - family-names: Borman
+    given-names: Tuomas
+  - family-names: Carvalho
+    given-names: Gustavo
+  - family-names: Chirico
+    given-names: Michael
+  - family-names: De Caceres
+    given-names: Miquel
+  - family-names: Durand
+    given-names: Sebastien
+  - family-names: Evangelista
+    given-names: Heloisa Beatriz Antoniazi
+  - family-names: FitzJohn
+    given-names: Rich
+  - family-names: Friendly
+    given-names: Michael
+  - family-names: Furneaux
+    given-names: Brendan
+  - family-names: Hannigan
+    given-names: Geoffrey
+  - family-names: Hill
+    given-names: Mark O.
+  - family-names: Lahti
+    given-names: Leo
+  - family-names: Martino
+    given-names: Cameron
+  - family-names: McGlinn
+    given-names: Dan
+  - family-names: Ouellette
+    given-names: Marie-Helene
+  - family-names: Ribeiro Cunha
+    given-names: Eduardo
+  - family-names: Smith
+    given-names: Tyler
+  - family-names: Stier
+    given-names: Adrian
+  - family-names: Ter Braak
+    given-names: Cajo J.F.
+  - family-names: Weedon
+    given-names: James
+  year: '2026'
+  doi: 10.32614/CRAN.package.vegan
+  version: '>= 2.7-1'
+- type: software
+  title: testthat
+  abstract: 'testthat: Unit Testing for R'
+  notes: Suggests
+  url: https://testthat.r-lib.org
+  repository: https://CRAN.R-project.org/package=testthat
+  authors:
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@posit.co
+  year: '2026'
+  doi: 10.32614/CRAN.package.testthat
+  version: '>= 3.0.0'
+
