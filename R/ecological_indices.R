@@ -174,7 +174,7 @@ num_species.default <- function(data, ...) {
 # =====diet_rel_abundance=====
 #' Calculate Diet Relative or Absolute Abundance
 #'
-#' TThis function calculates the relative or absolute abundance of four feeding types of nematodes in each sample.
+#' This function calculates the relative or absolute abundance of four feeding types of nematodes in each sample.
 #' The feeding types include bacterial feeders (Ba), fungus feeders (Fu), plant feeders (Pp), and omnivores/predators (Op).
 #'
 #' @param data \code{data.frame} or \code{matrix}. The nematode abundance table where rows represent samples and columns represent nematode genera.
@@ -258,6 +258,7 @@ diet_rel_abundance.data.frame <- function(data, total.abundance = NULL, relative
     rel_data <- rel_data %>%
       dplyr::mutate(dplyr::across(dplyr::everything(), ~ .x * abundance_value))
   }
+
   type_map <- c(
     "Bacterial feeders" = "Ba",
     "Fungus feeders" = "Fu",
@@ -272,6 +273,7 @@ diet_rel_abundance.data.frame <- function(data, total.abundance = NULL, relative
     Pp = genus_info$type == "Pp",
     Op = genus_info$type == "Op"
   )
+
   cal_fun <- function(data, genus_info, condition) {
     sel_genus <- genus_info %>%
       dplyr::filter(!!condition) %>%
@@ -285,6 +287,7 @@ diet_rel_abundance.data.frame <- function(data, total.abundance = NULL, relative
   })
   result_df <- as.data.frame(result)
   colnames(result_df) <- names(conditions)
+
   result_df <- data.frame(
     Sample.ID = row.names(result_df),
     result_df
@@ -370,6 +373,207 @@ diet_rel_abundance.default <- function(data, total.abundance = NULL, relative = 
   # Error for unsupported input types
   stop("Unsupported input type: ", paste(class(data), collapse = "/"), call. = FALSE)
 }
+
+
+# =====cp_rel_abundance=====
+#' Calculate CP Relative or Absolute Abundance
+#'
+#' This function calculates the relative or absolute abundance of nematodes in different CP (Colonizer-Persister) groups for each sample.
+#' The CP groups range from CP1 (colonizers, r-strategists) to CP5 (persisters, K-strategists). Genera without CP classification are grouped as No_CP.
+#'
+#' @param data \code{data.frame} or \code{matrix}. The nematode abundance table where rows represent samples and columns represent nematode genera.
+#' Each element indicates the count of a specific nematode genus in the corresponding sample. Row names must be sample names, and column names must be nematode genus names.
+#' @param total.abundance \code{data.frame}. A data frame with sample names as row names and a single column containing the total nematode abundance for each sample.
+#' This parameter is required when \code{relative} is set to \code{FALSE}. Default is \code{NULL}.
+#' @param relative \code{Logical}. If \code{TRUE} (default), the function calculates relative abundance (does not require \code{total.abundance}).
+#' If \code{FALSE}, the function calculates absolute abundance (requires \code{total.abundance}).
+#' @param ... Additional arguments (currently unused).
+#'
+#' @returns A data frame with seven columns:
+#'   \item{Sample.ID}{Character vector of sample identifiers (from row names of \code{data})}
+#'   \item{CP1}{Relative or absolute abundance of CP1 group (colonizers, r-strategists)}
+#'   \item{CP2}{Relative or absolute abundance of CP2 group}
+#'   \item{CP3}{Relative or absolute abundance of CP3 group}
+#'   \item{CP4}{Relative or absolute abundance of CP4 group}
+#'   \item{CP5}{Relative or absolute abundance of CP5 group (persisters, K-strategists)}
+#'   \item{No_CP}{Relative or absolute abundance of genera without CP classification (only present if such genera exist)}
+#' @examples
+#' # Example with a data frame
+#' df <- data.frame(
+#'   Cephalobus = c(10, NA, 15),
+#'   Caenorhabditis = c(5, 10, NA),
+#'   Pratylenchus = c(8, 12, 10),
+#'   row.names = c("A", "B", "C")
+#' )
+#' abundance <- data.frame(
+#'   abundance = c(100, 150, 120),
+#'   row.names = c("A", "B", "C")
+#' )
+#' cp_rel_abundance(df, abundance, relative = FALSE)
+#'
+#' # Example with a matrix
+#' mat <- matrix(c(10, NA, 15, 5, 10, NA, 8, 12, 10), nrow = 3, byrow = TRUE)
+#' colnames(mat) <- c("Cephalobus", "Caenorhabditis", "Pratylenchus")
+#' row.names(mat) <- c("A", "B", "C")
+#' cp_rel_abundance(mat)
+#' @export
+cp_rel_abundance <- function(data, total.abundance = NULL, relative = TRUE, ...) {
+  UseMethod("cp_rel_abundance")
+}
+
+#' @rdname cp_rel_abundance
+#' @method cp_rel_abundance data.frame
+#' @exportS3Method Nematode::cp_rel_abundance
+cp_rel_abundance.data.frame <- function(data, total.abundance = NULL, relative = TRUE, ...) {
+  if (is.null(rownames(data)) || is.null(colnames(data))) {
+    stop("Data must have row names and column names")
+  }
+  if (!all(sapply(data, is.numeric))) {
+    stop("The data contains non-numeric characters!")
+  }
+  if (!relative) {
+    if (is.null(total.abundance)) {
+      stop("total.abundance must be provided when relative = FALSE.")
+    }
+    if (!all(row.names(data) %in% row.names(total.abundance))) {
+      stop("Please provide the total.abundance information for all samples!")
+    }
+    if (!all(sapply(total.abundance, is.numeric))) {
+      stop("The total.abundance contains non-numeric characters!")
+    }
+  }
+  genus_info <- check_nematode_genus(colnames(data))
+  if (!all(genus_info$Exist)) {
+    missing <- genus_info$Query.genus[!genus_info$Exist]
+    stop(
+      length(missing), " genus names not found: ", paste(head(missing), collapse = ", "),
+      ifelse(length(missing) > 6, "...", "")
+    )
+  }
+  valid_habits <- c("Bacterial feeders", "Fungus feeders", "Plant feeders", "Omnivores", "Predators")
+  invalid_habits <- setdiff(unique(genus_info$Feeding_habit), valid_habits)
+  if (length(invalid_habits) > 0) {
+    stop("Unsupported feeding habit(s): ", paste(invalid_habits, collapse = ", "))
+  }
+  rel_data <- rel_abundance(data)
+  if (!relative) {
+    abundance_value <- total.abundance[
+      match(row.names(data), row.names(total.abundance)),
+      colnames(total.abundance)[1]
+    ]
+    rel_data <- rel_data %>%
+      dplyr::mutate(dplyr::across(dplyr::everything(), ~ .x * abundance_value))
+  }
+
+  conditions <- list(
+    CP1 = genus_info$CP_group == 1,
+    CP2 = genus_info$CP_group == 2,
+    CP3 = genus_info$CP_group == 3,
+    CP4 = genus_info$CP_group == 4,
+    CP5 = genus_info$CP_group == 5
+  )
+
+  if (any(is.na(genus_info$CP_group))) {
+    conditions$No_CP <- is.na(genus_info$CP_group)
+  }
+
+  cal_fun <- function(data, genus_info, condition) {
+    sel_genus <- genus_info %>%
+      dplyr::filter(!!condition) %>%
+      dplyr::pull("Genus")
+    data %>%
+      dplyr::select(dplyr::all_of(sel_genus)) %>%
+      rowSums()
+  }
+  result <- lapply(names(conditions), function(names) {
+    cal_fun(rel_data, genus_info, conditions[[names]])
+  })
+  result_df <- as.data.frame(result)
+  colnames(result_df) <- names(conditions)
+  result_df <- data.frame(
+    Sample.ID = row.names(result_df),
+    result_df
+  )
+  row.names(result_df) <- NULL
+  return(result_df)
+}
+
+#' @rdname cp_rel_abundance
+#' @method cp_rel_abundance matrix
+#' @exportS3Method Nematode::cp_rel_abundance
+cp_rel_abundance.matrix <- function(data, total.abundance = NULL, relative = TRUE, ...) {
+  if (is.null(rownames(data)) || is.null(colnames(data))) {
+    stop("Data must have row names and column names")
+  }
+  if (!all(is.numeric(data))) {
+    stop("The data contains non-numeric characters!")
+  }
+  if (!relative) {
+    if (is.null(total.abundance)) {
+      stop("total.abundance must be provided when relative = FALSE.")
+    }
+    if (!all(row.names(data) %in% row.names(total.abundance))) {
+      stop("Please provide the total.abundance information for all samples!")
+    }
+    if (!all(sapply(total.abundance, is.numeric))) {
+      stop("The total.abundance contains non-numeric characters!")
+    }
+  }
+  genus_info <- check_nematode_genus(colnames(data))
+  if (!all(genus_info$Exist)) {
+    missing <- genus_info$Query.genus[!genus_info$Exist]
+    stop(
+      length(missing), " genus names not found: ", paste(head(missing), collapse = ", "),
+      ifelse(length(missing) > 6, "...", "")
+    )
+  }
+  valid_habits <- c("Bacterial feeders", "Fungus feeders", "Plant feeders", "Omnivores", "Predators")
+  invalid_habits <- setdiff(unique(genus_info$Feeding_habit), valid_habits)
+  if (length(invalid_habits) > 0) {
+    stop("Unsupported feeding habit(s): ", paste(invalid_habits, collapse = ", "))
+  }
+  rel_data <- rel_abundance(data)
+  if (!relative) {
+    abundance_value <- total.abundance[match(row.names(data), row.names(total.abundance)), colnames(total.abundance)[1]]
+    rel_data <- rel_data * abundance_value
+  }
+
+  conditions <- list(
+    CP1 = genus_info$CP_group == 1,
+    CP2 = genus_info$CP_group == 2,
+    CP3 = genus_info$CP_group == 3,
+    CP4 = genus_info$CP_group == 4,
+    CP5 = genus_info$CP_group == 5
+  )
+
+  if (any(is.na(genus_info$CP_group))) {
+    conditions$No_CP <- is.na(genus_info$CP_group)
+  }
+  cal_fun <- function(data_mat, genus_info, condition) {
+    sel_genus <- genus_info[["Genus"]][condition]
+    rowSums(data_mat[, sel_genus, drop = FALSE])
+  }
+  result <- lapply(names(conditions), function(names) {
+    cal_fun(rel_data, genus_info, conditions[[names]])
+  })
+  result_mat <- do.call(cbind, result)
+  colnames(result_mat) <- names(conditions)
+  result_df <- data.frame(
+    Sample.ID = row.names(result_mat),
+    result_mat
+  )
+  row.names(result_df) <- NULL
+  return(result_df)
+}
+
+#' @rdname cp_rel_abundance
+#' @method cp_rel_abundance default
+#' @exportS3Method Nematode::cp_rel_abundance
+cp_rel_abundance.default <- function(data, total.abundance = NULL, relative = TRUE, ...) {
+  # Error for unsupported input types
+  stop("Unsupported input type: ", paste(class(data), collapse = "/"), call. = FALSE)
+}
+
 
 
 # =====Trophic diversity=====

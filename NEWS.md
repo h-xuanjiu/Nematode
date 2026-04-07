@@ -1,3 +1,10 @@
+# Nematode 0.3.0 (2026-04-07)
+
+## NEW FEATURES
+
+-   Added function `cp_rel_abundance`
+
+
 # Nematode 0.2.2 (2026-03-18)
 
 ## DATA UPDATES

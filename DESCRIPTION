@@ -1,7 +1,7 @@
 Package: Nematode
 Title: Ecological Indices Calculator for Nematode Communities
-Version: 0.2.2
-Date: 2026-03-18
+Version: 0.3.0
+Date: 2026-04-07
 Authors@R: c(
     person("Yuxuan", "He", , "heyuxuan0525@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0007-1149-5554")),
