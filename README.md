@@ -2,7 +2,10 @@
 
 <!-- badges: start -->
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/Nematode)](https://cran.r-project.org/package=Nematode) 
-[![CRAN monthly downloads](https://cranlogs.r-pkg.org/badges/Nematode)](https://cran.r-project.org/package=Nematode)
+[![CRAN monthly downloads](https://cranlogs.r-pkg.org/badges/Nematode?color=brightgreen)](https://cran.r-project.org/package=Nematode)
+[![License](https://img.shields.io/badge/license-GPL%20%3E%3D%203-brightgreen.svg?style=flat)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![Dependence](https://img.shields.io/badge/dependencies-4/19-brightgreen?style=flat)](https://www.r-pkg.org/pkg/Nematode)
+[![Last Commit](https://img.shields.io/github/last-commit/h-xuanjiu/Nematode)](https://github.com/h-xuanjiu/Nematode)
 <!-- badges: end -->
 
 ## Overview
