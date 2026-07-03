@@ -1,3 +1,10 @@
+# Nematode 0.3.1 (2026-07-03)
+
+## BUG FIXES
+
+-   Fixed a bug in the nematode Functional Metabolic Footprints calculation where the division by 2 was omitted.
+
+
 # Nematode 0.3.0 (2026-04-07)
 
 ## NEW FEATURES

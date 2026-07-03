@@ -162,9 +162,9 @@ NMF.data.frame <- function(data, abundance, type = "All", ...) {
   colnames(result_df) <- adj_type
 
   if ("All" %in% type) {
-    result_df$FMF <- result_df$Fe * result_df$Fs
+    result_df$FMF <- result_df$Fe * result_df$Fs / 2
   } else if ("FMF" %in% type) {
-    result_df$FMF <- result_df$Fe * result_df$Fs
+    result_df$FMF <- result_df$Fe * result_df$Fs / 2
     result_df <- result_df %>% dplyr::select(dplyr::all_of(type))
   }
   col_order <- c("BaMF", "FuMF", "PpMF", "OpMF", "Fe", "Fs", "TNMF", "FMF")
@@ -283,9 +283,9 @@ NMF.matrix <- function(data, abundance, type = "All", ...) {
   rownames(result_df) <- rownames(data)
 
   if ("All" %in% type) {
-    result_df$FMF <- result_df$Fe * result_df$Fs
+    result_df$FMF <- result_df$Fe * result_df$Fs / 2
   } else if ("FMF" %in% type) {
-    result_df$FMF <- result_df$Fe * result_df$Fs
+    result_df$FMF <- result_df$Fe * result_df$Fs / 2
     result_df <- result_df %>% dplyr::select(dplyr::all_of(type))
   }
 
